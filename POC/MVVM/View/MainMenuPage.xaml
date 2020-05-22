@@ -1,0 +1,45 @@
+﻿<Page x:Class="POC.MVVM.View.MainMenuPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:POC.MVVM.View"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:ff="clr-namespace:POC.Behaviours"
+      mc:Ignorable="d"
+      ShowsNavigationUI="False">
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="80"/>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Content="Logout" Width="50" Height="25" Command="{Binding Logout, UpdateSourceTrigger=PropertyChanged}" CommandParameter="Logout" Margin="700,2.5,5,2.5"/>
+        <GroupBox Grid.Row="1" Header="Product">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Product Catalogue" Margin="50, 10" Command="{Binding BtnProdCatalogue, UpdateSourceTrigger=PropertyChanged}" CommandParameter="ProdCatalogue"/>
+                <Button Content="Product Category" Margin="50, 10" Command="{Binding BtnProdCategory, UpdateSourceTrigger=PropertyChanged}" CommandParameter="ProdCategory"/>
+                <Button Content="Product Stock" Margin="50, 10" Command="{Binding BtnProdStock, UpdateSourceTrigger=PropertyChanged}" CommandParameter="ProdStock"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Grid.Row="2" Header="Sales">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Sale" Margin="50, 10" Command="{Binding BtnSales, UpdateSourceTrigger=PropertyChanged}" CommandParameter="Sales"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Grid.Row="3" Header="Customer Details">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Add Customer Details" Margin="50, 10" Command="{Binding BtnAddCustomer, UpdateSourceTrigger=PropertyChanged}" CommandParameter="AddCustomer"/>
+                <Button Content="Update Customer Details" Margin="50, 10" Command="{Binding BtnUpdateCustomer, UpdateSourceTrigger=PropertyChanged}" CommandParameter="UpdateCustomer"/>
+            </StackPanel>
+        </GroupBox>
+
+    </Grid>
+</Page>

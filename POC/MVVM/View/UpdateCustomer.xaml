@@ -1,0 +1,43 @@
+﻿<Window x:Class="POC.MVVM.View.UpdateCustomer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POC.MVVM.View"
+        xmlns:vm="clr-namespace:POC.MVVM.ViewModel"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="Update Customer" Height="550" Width="1024">
+    <Grid Margin="0,0,0,5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Row="0" Header="Customer Update Panel">
+            <WrapPanel>
+                <TextBox Text="{Binding CustomerName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150"/>
+                <TextBox Text="{Binding CustomerMobile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150"/>
+                <TextBox Text="{Binding CustomerAddress, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="250"/>
+                <TextBox Text="{Binding CustomerTelegram, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150"/>
+                <TextBox Text="{Binding CustomerEmail, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150"/>
+                <Button Content="Update Details" Height="20" Width="100" HorizontalAlignment="Left" Margin="10,4,0,0" Command="{Binding BtnUpdateDetails, UpdateSourceTrigger=PropertyChanged}" CommandParameter="UpdateDetails" IsEnabled="{Binding isUpdateEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+            </WrapPanel>
+        </GroupBox>
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" SelectionUnit="FullRow" IsReadOnly="True"
+                  CanUserAddRows="False" ItemsSource="{Binding CustomerList, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding CustomerListSelection, UpdateSourceTrigger=PropertyChanged}" CommandParameter="CustomerListSelection" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Customer Name" Width="*" Binding="{Binding Path=CustomerName}"/>
+                <DataGridTextColumn Header="Mobile Number" Width="*" Binding="{Binding Path=mobileNumber}"/>
+                <DataGridTextColumn Header="Address" Width="2*" Binding="{Binding Path=Address}"/>
+                <DataGridTextColumn Header="Telegram Number" Width="*" Binding="{Binding Path=whatsappNumber}"/>
+                <DataGridTextColumn Header="Email ID" Width="1.5*" Binding="{Binding Path=emailID}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

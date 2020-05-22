@@ -1,0 +1,79 @@
+﻿<Window x:Class="POC.MVVM.View.LoadCustomer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POC.MVVM.View"
+        xmlns:vm="clr-namespace:POC.MVVM.ViewModel"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="Add Customer" Height="450" Width="400">
+    <Grid Margin="0,0,0,5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="5" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="1" Grid.Row="0" Text="Customer Name" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+        <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding CustomerName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ToolTip="Customer Name">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding textBoxChanged}" CommandParameter="checkChanged" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <TextBlock Grid.Column="1" Grid.Row="1" Text="Mobile Number" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding CusMobileNum, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PreviewTextInput="TextBox_PreviewTextInput" MaxLength="10" ToolTip="Mobile Number">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding textBoxChanged}" CommandParameter="checkChanged" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <TextBlock Grid.Column="1" Grid.Row="2" Text="Address" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding CusAddress, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" TextWrapping="Wrap" ToolTip="Address">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding textBoxChanged}" CommandParameter="checkChanged" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <TextBlock Grid.Column="1" Grid.Row="3" Text="Telegram Number" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+        <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding CusWhatsappNum, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxLength="10" PreviewTextInput="TextBox_PreviewTextInput" ToolTip="Telegram Number">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding textBoxChanged}" CommandParameter="checkChanged" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <TextBlock Grid.Column="1" Grid.Row="4" Text="E-mail ID" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+        <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding EmailID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ToolTip="E-mail ID">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding textBoxChanged}" CommandParameter="checkChanged" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        
+        <Grid Grid.Column="2" Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="5"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Add" IsEnabled="{Binding isAddEnabled, UpdateSourceTrigger=PropertyChanged}" Command="{Binding AddPeople, UpdateSourceTrigger=PropertyChanged}" CommandParameter="AddPeople"/>
+            <Button Grid.Column="2" Content="Cancel" Command="{Binding CancelPeople, UpdateSourceTrigger=PropertyChanged}" CommandParameter="CancelPeople"/>
+        </Grid>
+    </Grid>
+</Window>

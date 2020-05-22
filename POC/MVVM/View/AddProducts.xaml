@@ -1,0 +1,59 @@
+﻿<Window x:Class="POC.MVVM.View.AddProducts"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POC.MVVM.View"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        mc:Ignorable="d"
+        Title="Add Products" Height="450" Width="400">
+    <Grid Margin="0,0,0,5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="5" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="1" Grid.Row="0" Text="Product Name" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+        <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" ToolTip="Product Name"/>
+        <TextBlock Grid.Column="1" Grid.Row="1" Text="Brand" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" ToolTip="Brand"/>
+        <TextBlock Grid.Column="1" Grid.Row="2" Text="Product Category" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" ToolTip="Product Category"/>
+        <TextBlock Grid.Column="1" Grid.Row="3" Text="MRP" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+        <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" ToolTip="MRP"/>
+        <TextBlock Grid.Column="1" Grid.Row="4" Text="Cost" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+        <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" ToolTip="Cost"/>
+        <TextBlock Grid.Column="1" Grid.Row="5" Text="Selling Price(SP)" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+        <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" ToolTip="Selling Price(SP)"/>
+        <TextBlock Grid.Column="1" Grid.Row="6" Text="Net Price(SP + GST)" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+        <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" ToolTip="Net Price(SP + GST)"/>
+        <TextBlock Grid.Column="1" Grid.Row="7" Text="Stock" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+        <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" ToolTip="Stock"/>
+        <TextBlock Grid.Column="1" Grid.Row="8" Text="Barcode" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+        <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" ToolTip="Barcode"/>
+        <Grid Grid.Column="2" Grid.Row="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="5"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Add" Command="{Binding AddProd, UpdateSourceTrigger=PropertyChanged}" CommandParameter="AddProd"/>
+            <Button Grid.Column="2" Content="Cancel" Command="{Binding CancelProd, UpdateSourceTrigger=PropertyChanged}" CommandParameter="CancelProd"/>
+        </Grid>
+    </Grid>
+</Window>
