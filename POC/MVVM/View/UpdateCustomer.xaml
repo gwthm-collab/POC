@@ -15,8 +15,14 @@
         </Grid.RowDefinitions>
         <GroupBox Grid.Row="0" Header="Customer Update Panel">
             <WrapPanel>
-                <TextBox Text="{Binding CustomerName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150"/>
-                <TextBox Text="{Binding CustomerMobile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150"/>
+                <TextBox Text="{Binding CustomerName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewKeyDown">
+                            <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="name" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <TextBox Text="{Binding CuadmstomerMobile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150"/>
                 <TextBox Text="{Binding CustomerAddress, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="250"/>
                 <TextBox Text="{Binding CustomerTelegram, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150"/>
                 <TextBox Text="{Binding CustomerEmail, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150"/>

@@ -13,6 +13,8 @@ namespace POC.MVVM.ViewModel
 {
     class UpdateCustomerVM : ViewModelBase
     {
+        private DataTable usersFromDB;
+
         #region Bind Property
         private string _CustomerName;
         public string CustomerName
@@ -63,6 +65,13 @@ namespace POC.MVVM.ViewModel
             set { _CustomerListSelection = value; OnPropertyChanged("CustomerListSelection"); }
         }
 
+        private ICommand _TextInput;
+        public ICommand TextInput
+        {
+            get { return _TextInput; }
+            set { _TextInput = value; OnPropertyChanged("TextInput"); }
+        }
+
         private bool _isUpdateEnabled = false;
         public bool isUpdateEnabled
         {
@@ -89,7 +98,9 @@ namespace POC.MVVM.ViewModel
         {
             BtnUpdateDetails = new RelayCommand(updateToDB);
             CustomerListSelection = new RelayCommand(populateEditBox);
-            CustomerList = DBConnector.GetFromDB(string.Format(DB_StoredProcedures.CUSTOMER_GET, string.Empty, string.Empty, string.Empty, string.Empty));
+            TextInput = new RelayCommand(textChanged);
+            usersFromDB = DBConnector.GetFromDB(string.Format(DB_StoredProcedures.CUSTOMER_GET, string.Empty, string.Empty, string.Empty, string.Empty));
+            CustomerList = usersFromDB.Copy();
         }
 
         private void populateEditBox(object obj)
@@ -112,6 +123,23 @@ namespace POC.MVVM.ViewModel
             CustomerList = null;
             CustomerList = DBConnector.GetFromDB(string.Format(DB_StoredProcedures.CUSTOMER_GET, string.Empty, string.Empty, string.Empty, string.Empty));
             
+        }
+
+        internal void textChanged(object changedString)
+        {
+            switch (changedString as string)
+            {
+                case "name":
+                    {
+                        if (!string.IsNullOrEmpty(CustomerName) && SelectedRecord == null)
+                        {
+                            CustomerList = null;
+                            var filtered = usersFromDB.AsEnumerable().Where(r => r.Field<string>("CustomerName").ToLower().Contains(CustomerName.ToLower()));
+                            CustomerList = filtered.Count() > 0 ? filtered.CopyToDataTable() : usersFromDB.Copy();
+                        }
+                    }
+                    break;
+            }
         }
     }
 }
