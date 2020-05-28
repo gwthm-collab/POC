@@ -30,6 +30,8 @@ namespace POC.Common
     {
         public static readonly string CUSTOMER_INSERT = @"CALL uspInsertCustomer('{0}', '{1}', '{2}', '{3}', '{4}')";//Name, mobile, address, telegramNumber, email
         public static readonly string CUSTOMER_GET = @"CALL uspGetCustomer('{0}', '{1}', '{2}', '{3}')";//mobile, address, name, email
+        public static readonly string HSN_GET = @"CALL uspGetHSN()";
         public static readonly string CUSTOMER_UPDATE = @"CALL uspUpdateCustomer({0}, '{1}', '{2}', '{3}', '{4}', '{5}')";//mobile, address, name, email
+        public static readonly string HSN_UPDATE = @"CALL uspUpdateHSN({0}, '{1}', '{2}', {3}, {4}, {5}, {6}, {7})";//hsncode, goods desc, cgst, sgst, igst, cess, isvalid
     }
 }

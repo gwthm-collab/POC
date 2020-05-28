@@ -1,0 +1,100 @@
+﻿<Window x:Class="POC.MVVM.View.ProductHSN"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POC.MVVM.View"
+        xmlns:vm="clr-namespace:POC.MVVM.ViewModel"
+        xmlns:conv="clr-namespace:POC.Behaviours"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        mc:Ignorable="d"
+        Title="HSN" Height="550" Width="1024" MinWidth="1024">
+    <Window.Resources>
+        <conv:CheckBoxConverter x:Key="checkBoxConverter"/>
+    </Window.Resources>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Add new HSN" Command="{Binding AddHSN, UpdateSourceTrigger=PropertyChanged}" />
+            </MenuItem>
+        </Menu>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="65"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Header="HSN Update Panel">
+                <WrapPanel>
+                    <TextBox Text="{Binding HSNCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewKeyDown">
+                                <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="HSNCode" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                    <TextBox Text="{Binding GoodsDesc, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="250">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewKeyDown">
+                                <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="GoodsDesc" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                    <TextBox Text="{Binding CGST, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewKeyDown">
+                                <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="CGST" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                    <TextBox Text="{Binding SGST, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewKeyDown">
+                                <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="SGST" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                    <TextBox Text="{Binding IGST, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="250">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewKeyDown">
+                                <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="IGST" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                    <TextBox Text="{Binding CompCess, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewKeyDown">
+                                <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="CompCess" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                    <CheckBox Content="Is Valid" Padding="1" IsChecked="{Binding IsValidHSN, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource checkBoxConverter}}" Width="150">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewKeyDown">
+                                <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="IsValidHSN" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </CheckBox>
+                    <Button Content="Update Details" Height="20" Width="100" HorizontalAlignment="Left" Margin="10,4,0,0" Command="{Binding BtnUpdateDetails, UpdateSourceTrigger=PropertyChanged}" CommandParameter="UpdateDetails" IsEnabled="{Binding isUpdateEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+                </WrapPanel>
+            </GroupBox>
+            <DataGrid Grid.Row="1" AutoGenerateColumns="False" SelectionUnit="FullRow" IsReadOnly="True"
+                  CanUserAddRows="False" ItemsSource="{Binding HSNList, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding HSNListSelection, UpdateSourceTrigger=PropertyChanged}" CommandParameter="HSNListSelection" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="HSN Code" Width="*" Binding="{Binding Path=HSNCode}"/>
+                    <DataGridTextColumn Header="Goods Description" Width="3*" Binding="{Binding Path=goods_Description}"/>
+                    <DataGridTextColumn Header="CGST" Width="*" Binding="{Binding Path=CGST}"/>
+                    <DataGridTextColumn Header="SGST" Width="*" Binding="{Binding Path=SGST}"/>
+                    <DataGridTextColumn Header="IGST" Width="*" Binding="{Binding Path=IGST}"/>
+                    <DataGridTextColumn Header="Compensation Cess" Width="*" Binding="{Binding Path=CompensationCess}"/>
+                    <DataGridCheckBoxColumn Header="Valid HSN" Binding="{Binding Path=isValid, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource checkBoxConverter}}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </DockPanel>
+</Window>

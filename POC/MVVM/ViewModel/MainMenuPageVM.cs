@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 using POC.Common;
 using POC.MVVM.View;
 
@@ -9,7 +10,6 @@ namespace POC.MVVM.ViewModel
     class MainMenuPageVM : ViewModelBase
     {
         Func<PocPages_t, object> pageCaller;
-        LoadCustomer loadCustomerWindow;
         UpdateCustomer updateCustomerWindow;
 
         #region Bind Property
@@ -32,11 +32,11 @@ namespace POC.MVVM.ViewModel
             get { return _BtnProdCategory; }
             set { _BtnProdCategory = value; OnPropertyChanged("BtnProdCategory"); }
         }
-        private ICommand _BtnProdStock;
-        public ICommand BtnProdStock
+        private ICommand _BtnProdHSN;
+        public ICommand BtnProdHSN
         {
-            get { return _BtnProdStock; }
-            set { _BtnProdStock = value; OnPropertyChanged("BtnProdStock"); }
+            get { return _BtnProdHSN; }
+            set { _BtnProdHSN = value; OnPropertyChanged("BtnProdHSN"); }
         }
         private ICommand _BtnSales;
         public ICommand BtnSales
@@ -66,7 +66,7 @@ namespace POC.MVVM.ViewModel
             Logout = new RelayCommand((obj) => _ = pageCaller(PocPages_t.LoginPage));
             BtnProdCatalogue = new RelayCommand(execute: ProductsActivity);
             BtnProdCategory = new RelayCommand(execute: ProductsActivity);
-            BtnProdStock = new RelayCommand(execute: ProductsActivity);
+            BtnProdHSN = new RelayCommand(execute: ProductsActivity);
             BtnSales = new RelayCommand(execute: SalesActivity);
             BtnAddCustomer = new RelayCommand(execute: CustomerActivity);
             BtnUpdateCustomer = new RelayCommand(execute: CustomerActivity);
@@ -76,34 +76,6 @@ namespace POC.MVVM.ViewModel
         {
             switch (obj as string)
             {
-                case "AddCustomer":
-                    {
-                        if (loadCustomerWindow == null)
-                        {
-                            loadCustomerWindow = new LoadCustomer
-                            {
-                                DataContext = new LoadCustomerVM(CustomerEvents)
-                            };
-                            loadCustomerWindow.Show();
-                        }
-                        else
-                        {
-                            if (loadCustomerWindow.IsLoaded.Equals(false))
-                            {
-                                loadCustomerWindow = null;
-                                loadCustomerWindow = new LoadCustomer
-                                {
-                                    DataContext = new LoadCustomerVM(CustomerEvents)
-                                };
-                                loadCustomerWindow.Show();
-                            }
-                            else
-                            {
-                                loadCustomerWindow.Focus();
-                            }
-                        }
-                    }
-                    break;
                 case "UpdateCustomer":
                     {
                         if (updateCustomerWindow == null)
@@ -135,18 +107,7 @@ namespace POC.MVVM.ViewModel
             }
         }
 
-        public object CustomerEvents(CustomerEventList_t eventTriggered)
-        {
-            switch (eventTriggered)
-            {
-                case CustomerEventList_t.cancelPeople:
-                    {
-                        loadCustomerWindow.Close();
-                    }
-                    break;
-            }
-            return null;
-        }
+        
 
 
         private void SalesActivity(object obj) => MessageBox.Show("This is not supported in this version.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -159,6 +120,15 @@ namespace POC.MVVM.ViewModel
                     {
                         ProductCatalogue catalogue = new ProductCatalogue();
                         catalogue.Show();
+                    }
+                    break;
+                case "ProdHSN":
+                    {
+                        ProductHSN hsn = new ProductHSN()
+                        {
+                            DataContext = new HSNproductVM()
+                        };
+                        hsn.Show();
                     }
                     break;
                 default:

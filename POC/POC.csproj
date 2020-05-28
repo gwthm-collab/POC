@@ -94,12 +94,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Behaviours\Converters.cs" />
     <Compile Include="Behaviours\PasswordBoxHelper.cs" />
     <Compile Include="Common\DataLibrary.cs" />
     <Compile Include="Common\PropertySupport.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\ViewModelBase.cs" />
     <Compile Include="MVVM\Model\DBConnector.cs" />
+    <Compile Include="MVVM\ViewModel\HSNproductVM.cs" />
     <Compile Include="MVVM\ViewModel\LoadCustomerVM.cs" />
     <Compile Include="MVVM\ViewModel\LoginVM.cs" />
     <Compile Include="MVVM\ViewModel\MainMenuPageVM.cs" />
@@ -126,6 +128,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\ProductHSN.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\Sales.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -138,6 +144,9 @@
   <ItemGroup>
     <Compile Include="MVVM\View\ProductCatalogue.xaml.cs">
       <DependentUpon>ProductCatalogue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\ProductHSN.xaml.cs">
+      <DependentUpon>ProductHSN.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\Sales.xaml.cs">
       <DependentUpon>Sales.xaml</DependentUpon>
@@ -189,6 +198,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MVVM\check.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

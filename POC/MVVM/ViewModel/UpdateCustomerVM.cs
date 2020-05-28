@@ -1,5 +1,6 @@
 ﻿using POC.Common;
 using POC.MVVM.Model;
+using POC.MVVM.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +15,7 @@ namespace POC.MVVM.ViewModel
     class UpdateCustomerVM : ViewModelBase
     {
         private DataTable usersFromDB;
+        LoadCustomer loadCustomerWindow;
 
         #region Bind Property
         private string _CustomerName;
@@ -72,6 +74,13 @@ namespace POC.MVVM.ViewModel
             set { _TextInput = value; OnPropertyChanged("TextInput"); }
         }
 
+        private ICommand _AddCustomer;
+        public ICommand AddCustomer
+        {
+            get { return _AddCustomer; }
+            set { _AddCustomer = value; OnPropertyChanged("AddCustomer"); }
+        }
+
         private bool _isUpdateEnabled = false;
         public bool isUpdateEnabled
         {
@@ -99,8 +108,57 @@ namespace POC.MVVM.ViewModel
             BtnUpdateDetails = new RelayCommand(updateToDB);
             CustomerListSelection = new RelayCommand(populateEditBox);
             TextInput = new RelayCommand(textChanged);
+            AddCustomer = new RelayCommand(AddNewCustomer);
             usersFromDB = DBConnector.GetFromDB(string.Format(DB_StoredProcedures.CUSTOMER_GET, string.Empty, string.Empty, string.Empty, string.Empty));
             CustomerList = usersFromDB.Copy();
+        }
+
+        private void AddNewCustomer(object obj)
+        {
+            if (loadCustomerWindow == null)
+            {
+                createAddCustomerDialog();
+            }
+            else
+            {
+                if (loadCustomerWindow.IsLoaded.Equals(false))
+                {
+                    loadCustomerWindow = null;
+                    createAddCustomerDialog();
+                }
+                else
+                {
+                    loadCustomerWindow.Focus();
+                }
+            }
+        }
+
+        private void createAddCustomerDialog()
+        {
+            loadCustomerWindow = new LoadCustomer
+            {
+                DataContext = new LoadCustomerVM(CustomerEvents)
+            };
+            loadCustomerWindow.Closing += (o, e) =>
+            {
+                usersFromDB = DBConnector.GetFromDB(string.Format(DB_StoredProcedures.CUSTOMER_GET, string.Empty, string.Empty, string.Empty, string.Empty));
+                CustomerList = null;
+                CustomerList = usersFromDB.Copy();
+            };
+            loadCustomerWindow.Show();
+        }
+
+        public object CustomerEvents(CustomerEventList_t eventTriggered)
+        {
+            switch (eventTriggered)
+            {
+                case CustomerEventList_t.cancelPeople:
+                    {
+                        loadCustomerWindow.Close();
+                    }
+                    break;
+            }
+            return null;
         }
 
         private void populateEditBox(object obj)
@@ -135,6 +193,46 @@ namespace POC.MVVM.ViewModel
                         {
                             CustomerList = null;
                             var filtered = usersFromDB.AsEnumerable().Where(r => r.Field<string>("CustomerName").ToLower().Contains(CustomerName.ToLower()));
+                            CustomerList = filtered.Count() > 0 ? filtered.CopyToDataTable() : usersFromDB.Copy();
+                        }
+                    }
+                    break;
+                case "mobile":
+                    {
+                        if (!string.IsNullOrEmpty(CustomerMobile) && SelectedRecord == null)
+                        {
+                            CustomerList = null;
+                            var filtered = usersFromDB.AsEnumerable().Where(r => r.Field<string>("mobileNumber").ToLower().Contains(CustomerMobile.ToLower()));
+                            CustomerList = filtered.Count() > 0 ? filtered.CopyToDataTable() : usersFromDB.Copy();
+                        }
+                    }
+                    break;
+                case "address":
+                    {
+                        if (!string.IsNullOrEmpty(CustomerAddress) && SelectedRecord == null)
+                        {
+                            CustomerList = null;
+                            var filtered = usersFromDB.AsEnumerable().Where(r => r.Field<string>("Address").ToLower().Contains(CustomerAddress.ToLower()));
+                            CustomerList = filtered.Count() > 0 ? filtered.CopyToDataTable() : usersFromDB.Copy();
+                        }
+                    }
+                    break;
+                case "telegram":
+                    {
+                        if (!string.IsNullOrEmpty(CustomerTelegram) && SelectedRecord == null)
+                        {
+                            CustomerList = null;
+                            var filtered = usersFromDB.AsEnumerable().Where(r => r.Field<string>("whatsappNumber").ToLower().Contains(CustomerTelegram.ToLower()));
+                            CustomerList = filtered.Count() > 0 ? filtered.CopyToDataTable() : usersFromDB.Copy();
+                        }
+                    }
+                    break;
+                case "email":
+                    {
+                        if (!string.IsNullOrEmpty(CustomerEmail) && SelectedRecord == null)
+                        {
+                            CustomerList = null;
+                            var filtered = usersFromDB.AsEnumerable().Where(r => r.Field<string>("emailID").ToLower().Contains(CustomerEmail.ToLower()));
                             CustomerList = filtered.Count() > 0 ? filtered.CopyToDataTable() : usersFromDB.Copy();
                         }
                     }

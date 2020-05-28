@@ -12,11 +12,11 @@ namespace POC.MVVM.Model
 {
     class DBConnector
     {
-        private static string server = "192.168.100.1";
-        private static string database = "retailshop";
-        private static string uid = "retailshop";
-        private static string password = "retailshop";
-        private static MySqlConnection connection = new MySqlConnection($"SERVER={server};DATABASE={database};UID={uid};PASSWORD={password};PORT=3308;");
+        private static string server = "localhost";
+        private static string database = "retaildb";
+        private static string uid = "root";
+        private static string password = "";
+        private static MySqlConnection connection = new MySqlConnection($"SERVER={server};DATABASE={database};UID={uid};PASSWORD={password};PORT=3306;");
 
         /// <summary>
         /// This method opens connection and must be used for each time to connect

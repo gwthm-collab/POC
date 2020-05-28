@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Sales invoice="1">
+  <Customer Name="cusname1" Phone="1234567890" CanTelegram="true"/>
+  <PaymentMethod Type="Card" AuthTokenNumber="XXXXX1234" DueAmount="0" Paid="1"/>
+  <Products>
+    <Product Name="prod1" quantity="1"/>
+    <Product Name="prod2" quantity="2"/>
+    <Product Name="prod3" quantity="2"/>
+    <Product Name="prod4" quantity="10"/>
+  </Products>
+</Sales>

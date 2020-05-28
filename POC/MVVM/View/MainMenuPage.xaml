@@ -26,7 +26,7 @@
             <StackPanel Orientation="Horizontal">
                 <Button Content="Product Catalogue" Margin="50, 10" Command="{Binding BtnProdCatalogue, UpdateSourceTrigger=PropertyChanged}" CommandParameter="ProdCatalogue"/>
                 <Button Content="Product Category" Margin="50, 10" Command="{Binding BtnProdCategory, UpdateSourceTrigger=PropertyChanged}" CommandParameter="ProdCategory"/>
-                <Button Content="Product Stock" Margin="50, 10" Command="{Binding BtnProdStock, UpdateSourceTrigger=PropertyChanged}" CommandParameter="ProdStock"/>
+                <Button Content="HSN" Margin="50, 10" Command="{Binding BtnProdHSN, UpdateSourceTrigger=PropertyChanged}" CommandParameter="ProdHSN"/>
             </StackPanel>
         </GroupBox>
         <GroupBox Grid.Row="2" Header="Sales">
@@ -36,8 +36,7 @@
         </GroupBox>
         <GroupBox Grid.Row="3" Header="Customer Details">
             <StackPanel Orientation="Horizontal">
-                <Button Content="Add Customer Details" Margin="50, 10" Command="{Binding BtnAddCustomer, UpdateSourceTrigger=PropertyChanged}" CommandParameter="AddCustomer"/>
-                <Button Content="Update Customer Details" Margin="50, 10" Command="{Binding BtnUpdateCustomer, UpdateSourceTrigger=PropertyChanged}" CommandParameter="UpdateCustomer"/>
+                <Button Content="Manage Customer Details" Margin="50, 10" Command="{Binding BtnUpdateCustomer, UpdateSourceTrigger=PropertyChanged}" CommandParameter="UpdateCustomer"/>
             </StackPanel>
         </GroupBox>
 
