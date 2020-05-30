@@ -78,6 +78,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\LoadHSN.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -103,16 +107,21 @@
     <Compile Include="MVVM\Model\DBConnector.cs" />
     <Compile Include="MVVM\ViewModel\HSNproductVM.cs" />
     <Compile Include="MVVM\ViewModel\LoadCustomerVM.cs" />
+    <Compile Include="MVVM\ViewModel\LoadHSNVM.cs" />
     <Compile Include="MVVM\ViewModel\LoginVM.cs" />
     <Compile Include="MVVM\ViewModel\MainMenuPageVM.cs" />
     <Compile Include="MVVM\ViewModel\MainWindowVM.cs" />
     <Compile Include="MVVM\ViewModel\ProductCatalogueVM.cs" />
+    <Compile Include="MVVM\ViewModel\ProductCategoryVM.cs" />
     <Compile Include="MVVM\ViewModel\UpdateCustomerVM.cs" />
     <Compile Include="MVVM\View\AddProducts.xaml.cs">
       <DependentUpon>AddProducts.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\LoadCustomer.xaml.cs">
       <DependentUpon>LoadCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\LoadHSN.xaml.cs">
+      <DependentUpon>LoadHSN.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -125,6 +134,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MVVM\View\ProductCatalogue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\ProductCategory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -144,6 +157,9 @@
   <ItemGroup>
     <Compile Include="MVVM\View\ProductCatalogue.xaml.cs">
       <DependentUpon>ProductCatalogue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\ProductCategory.xaml.cs">
+      <DependentUpon>ProductCategory.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\ProductHSN.xaml.cs">
       <DependentUpon>ProductHSN.xaml</DependentUpon>

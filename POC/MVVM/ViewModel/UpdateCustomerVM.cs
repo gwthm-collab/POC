@@ -148,11 +148,11 @@ namespace POC.MVVM.ViewModel
             loadCustomerWindow.Show();
         }
 
-        public object CustomerEvents(CustomerEventList_t eventTriggered)
+        public object CustomerEvents(EventContainer_enum eventTriggered)
         {
             switch (eventTriggered)
             {
-                case CustomerEventList_t.cancelPeople:
+                case EventContainer_enum.cancel:
                     {
                         loadCustomerWindow.Close();
                     }

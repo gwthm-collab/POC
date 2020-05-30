@@ -7,14 +7,14 @@
         xmlns:vm="clr-namespace:POC.MVVM.ViewModel"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="Update Customer" Height="550" Width="1024">
+        Title="Update Customer" Height="550" Width="1024" MinWidth="1024">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="Add new Customer" Command="{Binding AddCustomer, UpdateSourceTrigger=PropertyChanged}" />
             </MenuItem>
         </Menu>
-        <Grid Margin="0,0,0,5">
+        <Grid Margin="0,0,0,5" Background="WhiteSmoke">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
@@ -61,7 +61,8 @@
             </GroupBox>
             <DataGrid Grid.Row="1" AutoGenerateColumns="False" SelectionUnit="FullRow" IsReadOnly="True"
                   CanUserAddRows="False" ItemsSource="{Binding CustomerList, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
+                  SelectedItem="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" CanUserResizeRows="False"
+                  HeadersVisibility="Column">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <i:InvokeCommandAction Command="{Binding CustomerListSelection, UpdateSourceTrigger=PropertyChanged}" CommandParameter="CustomerListSelection" />

@@ -131,6 +131,15 @@ namespace POC.MVVM.ViewModel
                         hsn.Show();
                     }
                     break;
+                case "ProdCategory":
+                    {
+                        ProductCategory productCategory = new ProductCategory()
+                        {
+                            DataContext = new ProductCategoryVM()
+                        };
+                        productCategory.Show();
+                    }
+                    break;
                 default:
                     MessageBox.Show("This is not supported in this version.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     break;

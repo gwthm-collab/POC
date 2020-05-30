@@ -24,5 +24,14 @@ namespace POC.MVVM.View
         {
             InitializeComponent();
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult messageResult = MessageBox.Show("Do you want to exit?", "POC", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            if (messageResult.Equals(MessageBoxResult.No))
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }

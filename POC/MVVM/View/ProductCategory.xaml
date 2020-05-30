@@ -1,0 +1,75 @@
+﻿<Window x:Class="POC.MVVM.View.ProductCategory"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POC.MVVM.View"
+        xmlns:conv="clr-namespace:POC.Behaviours"
+        xmlns:vm="clr-namespace:POC.MVVM.ViewModel"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        mc:Ignorable="d"
+        Title="Product Category" Height="550" Width="650" MinWidth="550">
+    <Window.Resources>
+        <conv:CheckBoxConverter x:Key="checkBoxConverter"/>
+    </Window.Resources>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="Add new Category" Command="{Binding AddCategory, UpdateSourceTrigger=PropertyChanged}" />
+            </MenuItem>
+        </Menu>
+        <Grid Margin="0,0,0,5" Background="WhiteSmoke">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Header="Product Category Update Panel">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding ProductCategoryName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewKeyDown">
+                                <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="ProductCategoryName" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                    <TextBox Grid.Column="1" Text="{Binding HSNCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewKeyDown">
+                                <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="HSNCode" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                    <CheckBox Grid.Column="2" Content="Is Valid" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="1" IsChecked="{Binding IsValidCategory, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource checkBoxConverter}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewKeyDown">
+                                <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="IsValidCategory" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </CheckBox>
+                    <Button Grid.Column="3" Content="Update Details" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding BtnUpdateDetails, UpdateSourceTrigger=PropertyChanged}" CommandParameter="UpdateDetails" IsEnabled="{Binding isUpdateEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+            </GroupBox>
+            <DataGrid Grid.Row="1" AutoGenerateColumns="False" SelectionUnit="FullRow" IsReadOnly="True"
+                  CanUserAddRows="False" ItemsSource="{Binding CategoryList, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" CanUserResizeRows="False"
+                  HeadersVisibility="Column">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding ProdCategorySelection, UpdateSourceTrigger=PropertyChanged}" CommandParameter="CustomerListSelection" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Product Category" Width="*" Binding="{Binding Path=ProductCategory}"/>
+                    <DataGridTextColumn Header="HSN Code" Width="100" Binding="{Binding Path=HSNCode}"/>
+                    <DataGridCheckBoxColumn Header="Valid Category" Width="100" Binding="{Binding Path=isValid, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource checkBoxConverter}}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </DockPanel>
+</Window>

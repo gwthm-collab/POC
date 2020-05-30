@@ -12,9 +12,9 @@ namespace POC.Common
         MainMenuPage,
     }
 
-    enum CustomerEventList_t
+    enum EventContainer_enum
     {
-        cancelPeople,
+        cancel,
     }
 
     public class Customer
@@ -28,10 +28,20 @@ namespace POC.Common
 
     class DB_StoredProcedures
     {
+        #region Customer
         public static readonly string CUSTOMER_INSERT = @"CALL uspInsertCustomer('{0}', '{1}', '{2}', '{3}', '{4}')";//Name, mobile, address, telegramNumber, email
         public static readonly string CUSTOMER_GET = @"CALL uspGetCustomer('{0}', '{1}', '{2}', '{3}')";//mobile, address, name, email
+        public static readonly string CUSTOMER_UPDATE = @"CALL uspUpdateCustomer({0}, '{1}', '{2}', '{3}', '{4}', '{5}')";//mobile, address, name, email 
+        #endregion
+        #region HSN
         public static readonly string HSN_GET = @"CALL uspGetHSN()";
-        public static readonly string CUSTOMER_UPDATE = @"CALL uspUpdateCustomer({0}, '{1}', '{2}', '{3}', '{4}', '{5}')";//mobile, address, name, email
         public static readonly string HSN_UPDATE = @"CALL uspUpdateHSN({0}, '{1}', '{2}', {3}, {4}, {5}, {6}, {7})";//hsncode, goods desc, cgst, sgst, igst, cess, isvalid
+        public static readonly string HSN_INSERT = @"CALL uspInsertHSN('{0}', '{1}', {2}, {3}, {4}, {5}, {6})";//hsncode, goods desc, cgst, sgst, igst, cess, isvalid 
+        #endregion
+        #region Product Category
+        public static readonly string PRODCATEGORY_GET = @"CALL uspGetProductCategory()";
+        public static readonly string PRODCATEGORY_UPDATE = @"CALL uspUpdateHSN({0}, '{1}', '{2}', {3}, {4}, {5}, {6}, {7})";//hsncode, goods desc, cgst, sgst, igst, cess, isvalid
+        public static readonly string PRODCATEGORY_INSERT = @"CALL uspInsertHSN('{0}', '{1}', {2}, {3}, {4}, {5}, {6})";//hsncode, goods desc, cgst, sgst, igst, cess, isvalid 
+        #endregion
     }
 }

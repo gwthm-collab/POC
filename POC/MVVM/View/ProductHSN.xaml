@@ -20,47 +20,47 @@
         </Menu>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="65"/>
+                <RowDefinition Height="70"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <GroupBox Grid.Row="0" Header="HSN Update Panel">
                 <WrapPanel>
-                    <TextBox Text="{Binding HSNCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150">
+                    <TextBox Text="{Binding HSNCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Height="20" Width="150">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewKeyDown">
                                 <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="HSNCode" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </TextBox>
-                    <TextBox Text="{Binding GoodsDesc, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="250">
+                    <TextBox Text="{Binding GoodsDesc, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Height="20" Width="250">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewKeyDown">
                                 <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="GoodsDesc" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </TextBox>
-                    <TextBox Text="{Binding CGST, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150">
+                    <TextBox Text="{Binding CGST, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Height="20" Width="150">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewKeyDown">
                                 <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="CGST" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </TextBox>
-                    <TextBox Text="{Binding SGST, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150">
+                    <TextBox Text="{Binding SGST, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Height="20" Width="150">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewKeyDown">
                                 <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="SGST" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </TextBox>
-                    <TextBox Text="{Binding IGST, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="250">
+                    <TextBox Text="{Binding IGST, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Height="20" Width="250">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewKeyDown">
                                 <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="IGST" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </TextBox>
-                    <TextBox Text="{Binding CompCess, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150">
+                    <TextBox Text="{Binding CompCess, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Height="20" Width="150">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewKeyDown">
                                 <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="CompCess" />
@@ -77,7 +77,7 @@
                     <Button Content="Update Details" Height="20" Width="100" HorizontalAlignment="Left" Margin="10,4,0,0" Command="{Binding BtnUpdateDetails, UpdateSourceTrigger=PropertyChanged}" CommandParameter="UpdateDetails" IsEnabled="{Binding isUpdateEnabled, UpdateSourceTrigger=PropertyChanged}"/>
                 </WrapPanel>
             </GroupBox>
-            <DataGrid Grid.Row="1" AutoGenerateColumns="False" SelectionUnit="FullRow" IsReadOnly="True"
+            <DataGrid Grid.Row="1" AutoGenerateColumns="False" SelectionUnit="FullRow" IsReadOnly="True" HeadersVisibility="Column"
                   CanUserAddRows="False" ItemsSource="{Binding HSNList, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
                 <i:Interaction.Triggers>

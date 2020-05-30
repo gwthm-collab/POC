@@ -12,7 +12,7 @@ namespace POC.MVVM.ViewModel
 {
     class LoadCustomerVM : ViewModelBase
     {
-        Func<CustomerEventList_t, object> triggerEvent;
+        Func<EventContainer_enum, object> triggerEvent;
 
         #region Bind Property
         private ICommand _AddPeople;
@@ -84,11 +84,11 @@ namespace POC.MVVM.ViewModel
 
         #endregion
 
-        public LoadCustomerVM(Func<CustomerEventList_t, object> events)
+        public LoadCustomerVM(Func<EventContainer_enum, object> events)
         {
             triggerEvent += events;
             AddPeople = new RelayCommand(AddFromForm);
-            CancelPeople = new RelayCommand((obj) => _ = triggerEvent(CustomerEventList_t.cancelPeople));
+            CancelPeople = new RelayCommand((obj) => _ = triggerEvent(EventContainer_enum.cancel));
             textBoxChanged = new RelayCommand((obj) => isAddEnabled = true);
         }
 
