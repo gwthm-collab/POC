@@ -142,7 +142,7 @@ namespace POC.MVVM.ViewModel
         {
             addHSNWindow = new AddProductCategory
             {
-                DataContext = new AddProductCategoryVM(Events)
+                DataContext = new AddProductCategoryVM(Events, HSNKeyValue)
             };
             addHSNWindow.Closing += (o, e) =>
             {

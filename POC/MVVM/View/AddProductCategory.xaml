@@ -32,13 +32,13 @@
             </i:Interaction.Triggers>
         </TextBox>
         <TextBlock Grid.Column="0" Grid.Row="1" Text="HSN Code" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
-        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding HSNCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ToolTip="HSN Code">
+        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding HSNKeyValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedValue="{Binding HSNCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DisplayMemberPath="Value" ToolTip="HSN Code">
             <i:Interaction.Triggers>
-                <i:EventTrigger EventName="TextChanged">
+                <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding textBoxChanged}" CommandParameter="checkChanged" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </TextBox>
+        </ComboBox>
         <TextBlock Grid.Column="0" Grid.Row="2" Text="Valid Category" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
         <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" IsChecked="{Binding IsValidCategory, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource checkBoxConverter}}" ToolTip="Valid Category">
             <i:Interaction.Triggers>

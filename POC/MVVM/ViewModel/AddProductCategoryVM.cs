@@ -1,4 +1,5 @@
-﻿using POC.Common;
+﻿using Org.BouncyCastle.Asn1.X509;
+using POC.Common;
 using POC.MVVM.Model;
 using System;
 using System.Collections.Generic;
@@ -36,8 +37,22 @@ namespace POC.MVVM.ViewModel
             set { _textBoxChanged = value; OnPropertyChanged("textBoxChanged"); }
         }
 
-        private string _HSNCode;
-        public string HSNCode
+        private Dictionary<int, string> _HSNKeyValue = new Dictionary<int, string>();
+        public Dictionary<int, string> HSNKeyValue
+        {
+            get
+            {
+                return _HSNKeyValue;
+            }
+            set
+            {
+                _HSNKeyValue = value;
+                OnPropertyChanged("HSNKeyValue");
+            }
+        }
+
+        private KeyValuePair<int, string> _HSNCode = new KeyValuePair<int, string>();
+        public KeyValuePair<int, string> HSNCode
         {
             get { return _HSNCode; }
             set { _HSNCode = value; OnPropertyChanged("HSNCode"); }
@@ -66,9 +81,10 @@ namespace POC.MVVM.ViewModel
 
         #endregion
 
-        public AddProductCategoryVM(Func<EventContainer_enum, object> events)
+        public AddProductCategoryVM(Func<EventContainer_enum, object> events, Dictionary<int, string> keyValues)
         {
             triggerEvent += events;
+            HSNKeyValue = new Dictionary<int, string>(keyValues);
             AddCategory = new RelayCommand(AddFromForm);
             CancelCategory = new RelayCommand((obj) => _ = triggerEvent(EventContainer_enum.cancel));
             textBoxChanged = new RelayCommand((obj) => isAddEnabled = true);
@@ -77,12 +93,12 @@ namespace POC.MVVM.ViewModel
         private void AddFromForm(object obj)
         {
             //Event to DB
-            bool status = DBConnector.SendToDB(string.Format(DB_StoredProcedures.PRODCATEGORY_INSERT, ProductCategoryName, HSNCode, IsValidCategory));
+            bool status = DBConnector.SendToDB(string.Format(DB_StoredProcedures.PRODCATEGORY_INSERT, ProductCategoryName, HSNCode.Value, IsValidCategory));
 
             if (status)
             {
                 MessageBox.Show($"Product Category: {ProductCategoryName}\nAdded Successfully.", "Add Product Category", MessageBoxButton.OK, MessageBoxImage.Information);
-                HSNCode = string.Empty;
+                HSNCode = new KeyValuePair<int, string>();
                 ProductCategoryName = string.Empty;
                 IsValidCategory = "1";
             }
