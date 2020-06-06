@@ -70,6 +70,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="MVVM\View\AddProductCategory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\AddProducts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -105,6 +109,7 @@
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\ViewModelBase.cs" />
     <Compile Include="MVVM\Model\DBConnector.cs" />
+    <Compile Include="MVVM\ViewModel\AddProductCategoryVM.cs" />
     <Compile Include="MVVM\ViewModel\HSNproductVM.cs" />
     <Compile Include="MVVM\ViewModel\LoadCustomerVM.cs" />
     <Compile Include="MVVM\ViewModel\LoadHSNVM.cs" />
@@ -114,6 +119,9 @@
     <Compile Include="MVVM\ViewModel\ProductCatalogueVM.cs" />
     <Compile Include="MVVM\ViewModel\ProductCategoryVM.cs" />
     <Compile Include="MVVM\ViewModel\UpdateCustomerVM.cs" />
+    <Compile Include="MVVM\View\AddProductCategory.xaml.cs">
+      <DependentUpon>AddProductCategory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\AddProducts.xaml.cs">
       <DependentUpon>AddProducts.xaml</DependentUpon>
     </Compile>

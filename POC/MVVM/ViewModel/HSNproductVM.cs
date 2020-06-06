@@ -150,7 +150,7 @@ namespace POC.MVVM.ViewModel
         {
             addHSNWindow = new LoadHSN
             {
-                DataContext = new LoadHSNVM(CustomerEvents)
+                DataContext = new LoadHSNVM(Events)
             };
             addHSNWindow.Closing += (o, e) =>
             {
@@ -161,7 +161,7 @@ namespace POC.MVVM.ViewModel
             addHSNWindow.Show();
         }
 
-        public object CustomerEvents(EventContainer_enum eventTriggered)
+        public object Events(EventContainer_enum eventTriggered)
         {
             switch (eventTriggered)
             {
@@ -194,8 +194,8 @@ namespace POC.MVVM.ViewModel
             DBConnector.SendToDB(string.Format(DB_StoredProcedures.HSN_UPDATE, SelectedRecord["pk_HSN"],
                             HSNCode, GoodsDesc, CGST, SGST, IGST, CompCess, IsValidHSN));
             HSNList = null;
-            HSNList = DBConnector.GetFromDB(string.Format(DB_StoredProcedures.HSN_GET));
-
+            usersFromDB = DBConnector.GetFromDB(string.Format(DB_StoredProcedures.HSN_GET));
+            HSNList = usersFromDB.Copy();
         }
 
         internal void textChanged(object changedString)

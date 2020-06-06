@@ -3,67 +3,57 @@ using POC.MVVM.Model;
 using POC.MVVM.View;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace POC.MVVM.ViewModel
 {
     class ProductCategoryVM: ViewModelBase
     {
         private DataTable usersFromDB;
-        LoadHSN addHSNWindow;
+        AddProductCategory addHSNWindow;
+        DataTable hsnPktable;
 
         #region Bind Property
-        private string _HSNCode;
-        public string HSNCode
+        private KeyValuePair<int, string> _HSNCode = new KeyValuePair<int, string>();
+        public KeyValuePair<int, string> HSNCode
         {
             get { return _HSNCode; }
             set { _HSNCode = value; OnPropertyChanged("HSNCode"); }
         }
 
-        private string _GoodsDesc;
-        public string GoodsDesc
+        private Dictionary<int, string> _HSNKeyValue = new Dictionary<int, string>();
+        public Dictionary<int, string> HSNKeyValue
         {
-            get { return _GoodsDesc; }
-            set { _GoodsDesc = value; OnPropertyChanged("GoodsDesc"); }
+            get
+            {
+                return _HSNKeyValue;
+            }
+            set
+            {
+                _HSNKeyValue = value;
+                OnPropertyChanged("HSNKeyValue");
+            }
         }
 
-        private string _CGST;
-        public string CGST
+        private string _ProductCategoryName;
+        public string ProductCategoryName
         {
-            get { return _CGST; }
-            set { _CGST = value; OnPropertyChanged("CGST"); }
+            get { return _ProductCategoryName; }
+            set { _ProductCategoryName = value; OnPropertyChanged("ProductCategoryName"); }
         }
 
-        private string _SGST;
-        public string SGST
+        private string _IsValidCategory = "0";
+        public string IsValidCategory
         {
-            get { return _SGST; }
-            set { _SGST = value; OnPropertyChanged("SGST"); }
-        }
-
-        private string _IGST;
-        public string IGST
-        {
-            get { return _IGST; }
-            set { _IGST = value; OnPropertyChanged("IGST"); }
-        }
-
-        private string _CompCess;
-        public string CompCess
-        {
-            get { return _CompCess; }
-            set { _CompCess = value; OnPropertyChanged("CompCess"); }
-        }
-
-        private string _IsValidHSN = "0";
-        public string IsValidHSN
-        {
-            get { return _IsValidHSN; }
-            set { _IsValidHSN = value; OnPropertyChanged("IsValidHSN"); }
+            get { return _IsValidCategory; }
+            set { _IsValidCategory = value; OnPropertyChanged("IsValidCategory"); }
         }
 
         private ICommand _BtnUpdateDetails;
@@ -73,11 +63,11 @@ namespace POC.MVVM.ViewModel
             set { _BtnUpdateDetails = value; OnPropertyChanged("BtnUpdateDetails"); }
         }
 
-        private ICommand _HSNListSelection;
-        public ICommand HSNListSelection
+        private ICommand _ProdCategorySelection;
+        public ICommand ProdCategorySelection
         {
-            get { return _HSNListSelection; }
-            set { _HSNListSelection = value; OnPropertyChanged("HSNListSelection"); }
+            get { return _ProdCategorySelection; }
+            set { _ProdCategorySelection = value; OnPropertyChanged("ProdCategorySelection"); }
         }
 
         private ICommand _TextInput;
@@ -87,11 +77,11 @@ namespace POC.MVVM.ViewModel
             set { _TextInput = value; OnPropertyChanged("TextInput"); }
         }
 
-        private ICommand _AddHSN;
-        public ICommand AddHSN
+        private ICommand _AddCategory;
+        public ICommand AddCategory
         {
-            get { return _AddHSN; }
-            set { _AddHSN = value; OnPropertyChanged("AddHSN"); }
+            get { return _AddCategory; }
+            set { _AddCategory = value; OnPropertyChanged("AddCategory"); }
         }
 
         private bool _isUpdateEnabled = false;
@@ -101,11 +91,11 @@ namespace POC.MVVM.ViewModel
             set { _isUpdateEnabled = value; OnPropertyChanged("isUpdateEnabled"); }
         }
 
-        private DataTable _HSNList = new DataTable();
+        private DataTable _CategoryList = new DataTable();
         public DataTable CategoryList
         {
-            get { return _HSNList; }
-            set { _HSNList = value; OnPropertyChanged("HSNList"); }
+            get { return _CategoryList; }
+            set { _CategoryList = value; OnPropertyChanged("CategoryList"); }
         }
 
         private DataRowView _SelectedRecord;
@@ -119,9 +109,11 @@ namespace POC.MVVM.ViewModel
         public ProductCategoryVM()
         {
             BtnUpdateDetails = new RelayCommand(updateToDB);
-            HSNListSelection = new RelayCommand(populateEditBox);
+            ProdCategorySelection = new RelayCommand(populateEditBox);
             TextInput = new RelayCommand(textChanged);
-            AddHSN = new RelayCommand(AddNewHSN);
+            AddCategory = new RelayCommand(AddNewHSN);
+            hsnPktable = DBConnector.GetFromDB(string.Format(DB_StoredProcedures.HSN_GET));
+            HSNKeyValue = hsnPktable.AsEnumerable().ToDictionary(row => row.Field<int>("pk_HSN"), row => row.Field<string>("HSNCode"));
             usersFromDB = DBConnector.GetFromDB(string.Format(DB_StoredProcedures.PRODCATEGORY_GET));
             CategoryList = usersFromDB.Copy();
         }
@@ -148,9 +140,9 @@ namespace POC.MVVM.ViewModel
 
         private void createAddHSNDialog()
         {
-            addHSNWindow = new LoadHSN
+            addHSNWindow = new AddProductCategory
             {
-                DataContext = new LoadHSNVM(CustomerEvents)
+                DataContext = new AddProductCategoryVM(Events)
             };
             addHSNWindow.Closing += (o, e) =>
             {
@@ -161,7 +153,7 @@ namespace POC.MVVM.ViewModel
             addHSNWindow.Show();
         }
 
-        public object CustomerEvents(EventContainer_enum eventTriggered)
+        public object Events(EventContainer_enum eventTriggered)
         {
             switch (eventTriggered)
             {
@@ -179,23 +171,19 @@ namespace POC.MVVM.ViewModel
             if (SelectedRecord != null)
             {
                 isUpdateEnabled = true;
-                HSNCode = SelectedRecord["HSNCode"] as string;
-                GoodsDesc = SelectedRecord["goods_Description"] as string;
-                CGST = ((float)SelectedRecord["CGST"]).ToString();
-                SGST = ((float)SelectedRecord["SGST"]).ToString();
-                IGST = ((float)SelectedRecord["IGST"]).ToString();
-                CompCess = ((float)SelectedRecord["CompensationCess"]).ToString();
-                IsValidHSN = ((int)SelectedRecord["isValid"]).ToString();
+                ProductCategoryName = SelectedRecord["ProductCategory"] as string;
+                HSNCode = HSNKeyValue.Where(x => x.Value.Equals(SelectedRecord["HSNCode"] as string)).FirstOrDefault();
+                IsValidCategory = ((int)SelectedRecord["isValid"]).ToString();
             }
         }
 
         private void updateToDB(object obj)
         {
-            DBConnector.SendToDB(string.Format(DB_StoredProcedures.PRODCATEGORY_UPDATE, SelectedRecord["pk_HSN"],
-                            HSNCode, GoodsDesc, CGST, SGST, IGST, CompCess, IsValidHSN));
+            DBConnector.SendToDB(string.Format(DB_StoredProcedures.PRODCATEGORY_UPDATE, SelectedRecord["pk_productCategory"], ProductCategoryName,
+                            HSNCode.Key, IsValidCategory));
             CategoryList = null;
-            CategoryList = DBConnector.GetFromDB(string.Format(DB_StoredProcedures.PRODCATEGORY_GET));
-
+            usersFromDB = DBConnector.GetFromDB(string.Format(DB_StoredProcedures.PRODCATEGORY_GET));
+            CategoryList = usersFromDB.Copy();
         }
 
         internal void textChanged(object changedString)
@@ -204,70 +192,30 @@ namespace POC.MVVM.ViewModel
             {
                 case "HSNCode":
                     {
-                        if (!string.IsNullOrEmpty(HSNCode) && SelectedRecord == null)
+                        if (!string.IsNullOrEmpty(HSNCode.Value as string) && SelectedRecord == null)
                         {
                             CategoryList = null;
-                            var filtered = usersFromDB.AsEnumerable().Where(r => r.Field<string>("HSNCode").ToLower().Contains(HSNCode.ToLower()));
+                            var filtered = usersFromDB.AsEnumerable().Where(r => r.Field<string>("HSNCode").ToLower().Contains((HSNCode.Value as string).ToLower()));
                             CategoryList = filtered.Count() > 0 ? filtered.CopyToDataTable() : usersFromDB.Copy();
                         }
                     }
                     break;
-                case "GoodsDesc":
+                case "IsValidCategory":
                     {
-                        if (!string.IsNullOrEmpty(GoodsDesc) && SelectedRecord == null)
+                        if (!string.IsNullOrEmpty(IsValidCategory) && SelectedRecord == null)
                         {
                             CategoryList = null;
-                            var filtered = usersFromDB.AsEnumerable().Where(r => r.Field<string>("goods_Description").ToLower().Contains(GoodsDesc.ToLower()));
+                            var filtered = usersFromDB.AsEnumerable().Where(r => r.Field<string>("isValid").ToLower().Contains(IsValidCategory.ToLower()));
                             CategoryList = filtered.Count() > 0 ? filtered.CopyToDataTable() : usersFromDB.Copy();
                         }
                     }
                     break;
-                case "CGST":
+                case "ProductCategoryName":
                     {
-                        if (!string.IsNullOrEmpty(CGST) && SelectedRecord == null)
+                        if (!string.IsNullOrEmpty(ProductCategoryName) && SelectedRecord == null)
                         {
                             CategoryList = null;
-                            var filtered = usersFromDB.AsEnumerable().Where(r => r.Field<string>("CGST").ToLower().Contains(CGST.ToLower()));
-                            CategoryList = filtered.Count() > 0 ? filtered.CopyToDataTable() : usersFromDB.Copy();
-                        }
-                    }
-                    break;
-                case "SGST":
-                    {
-                        if (!string.IsNullOrEmpty(SGST) && SelectedRecord == null)
-                        {
-                            CategoryList = null;
-                            var filtered = usersFromDB.AsEnumerable().Where(r => r.Field<string>("SGST").ToLower().Contains(SGST.ToLower()));
-                            CategoryList = filtered.Count() > 0 ? filtered.CopyToDataTable() : usersFromDB.Copy();
-                        }
-                    }
-                    break;
-                case "IGST":
-                    {
-                        if (!string.IsNullOrEmpty(IGST) && SelectedRecord == null)
-                        {
-                            CategoryList = null;
-                            var filtered = usersFromDB.AsEnumerable().Where(r => r.Field<string>("IGST").ToLower().Contains(IGST.ToLower()));
-                            CategoryList = filtered.Count() > 0 ? filtered.CopyToDataTable() : usersFromDB.Copy();
-                        }
-                    }
-                    break;
-                case "CompCess":
-                    {
-                        if (!string.IsNullOrEmpty(CompCess) && SelectedRecord == null)
-                        {
-                            CategoryList = null;
-                            var filtered = usersFromDB.AsEnumerable().Where(r => r.Field<string>("CompensationCess").ToLower().Contains(CompCess.ToLower()));
-                            CategoryList = filtered.Count() > 0 ? filtered.CopyToDataTable() : usersFromDB.Copy();
-                        }
-                    }
-                    break;
-                case "IsValidHSN":
-                    {
-                        if (!string.IsNullOrEmpty(IsValidHSN) && SelectedRecord == null)
-                        {
-                            CategoryList = null;
-                            var filtered = usersFromDB.AsEnumerable().Where(r => r.Field<string>("isValid").ToLower().Contains(IsValidHSN.ToLower()));
+                            var filtered = usersFromDB.AsEnumerable().Where(r => r.Field<string>("ProductCategory").ToLower().Contains(ProductCategoryName.ToLower()));
                             CategoryList = filtered.Count() > 0 ? filtered.CopyToDataTable() : usersFromDB.Copy();
                         }
                     }

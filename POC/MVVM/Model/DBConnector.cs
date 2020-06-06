@@ -79,7 +79,7 @@ namespace POC.MVVM.Model
                     //Execute command
                     int reader = cmd.ExecuteNonQuery();
                 }
-                catch
+                catch(Exception ex)
                 {
                     CloseConnection();
                     return false;

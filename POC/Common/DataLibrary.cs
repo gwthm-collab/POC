@@ -40,8 +40,8 @@ namespace POC.Common
         #endregion
         #region Product Category
         public static readonly string PRODCATEGORY_GET = @"CALL uspGetProductCategory()";
-        public static readonly string PRODCATEGORY_UPDATE = @"CALL uspUpdateHSN({0}, '{1}', '{2}', {3}, {4}, {5}, {6}, {7})";//hsncode, goods desc, cgst, sgst, igst, cess, isvalid
-        public static readonly string PRODCATEGORY_INSERT = @"CALL uspInsertHSN('{0}', '{1}', {2}, {3}, {4}, {5}, {6})";//hsncode, goods desc, cgst, sgst, igst, cess, isvalid 
+        public static readonly string PRODCATEGORY_UPDATE = @"CALL uspUpdateProductCategory({0}, '{1}', {2}, {3})";//productcategory, hsncode, isvalid
+        public static readonly string PRODCATEGORY_INSERT = @"CALL uspInsertProductCategory('{0}', '{1}', {2})";//productcategory, hsncode, isvalid
         #endregion
     }
 }

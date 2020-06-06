@@ -38,16 +38,19 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </TextBox>
-                    <TextBox Grid.Column="1" Text="{Binding HSNCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <ComboBox Name="check" Grid.Column="1" SelectedValue="{Binding HSNCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DisplayMemberPath="Value" ItemsSource="{Binding HSNKeyValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewKeyDown">
+                            <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="HSNCode" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
+                    </ComboBox>
                     <CheckBox Grid.Column="2" Content="Is Valid" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="1" IsChecked="{Binding IsValidCategory, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource checkBoxConverter}}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewKeyDown">
+                                <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="IsValidCategory" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseDown">
                                 <i:InvokeCommandAction Command="{Binding TextInput, UpdateSourceTrigger=PropertyChanged}" CommandParameter="IsValidCategory" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
@@ -58,7 +61,7 @@
             <DataGrid Grid.Row="1" AutoGenerateColumns="False" SelectionUnit="FullRow" IsReadOnly="True"
                   CanUserAddRows="False" ItemsSource="{Binding CategoryList, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" CanUserResizeRows="False"
-                  HeadersVisibility="Column">
+                  HeadersVisibility="Column" SelectionMode="Single">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <i:InvokeCommandAction Command="{Binding ProdCategorySelection, UpdateSourceTrigger=PropertyChanged}" CommandParameter="CustomerListSelection" />

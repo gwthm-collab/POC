@@ -179,8 +179,8 @@ namespace POC.MVVM.ViewModel
             DBConnector.SendToDB(string.Format(DB_StoredProcedures.CUSTOMER_UPDATE, SelectedRecord["pk_customerID"],
                             CustomerName, CustomerMobile, CustomerAddress, CustomerTelegram, CustomerEmail));
             CustomerList = null;
-            CustomerList = DBConnector.GetFromDB(string.Format(DB_StoredProcedures.CUSTOMER_GET, string.Empty, string.Empty, string.Empty, string.Empty));
-            
+            usersFromDB = DBConnector.GetFromDB(string.Format(DB_StoredProcedures.CUSTOMER_GET, string.Empty, string.Empty, string.Empty, string.Empty));
+            CustomerList = usersFromDB.Copy();
         }
 
         internal void textChanged(object changedString)

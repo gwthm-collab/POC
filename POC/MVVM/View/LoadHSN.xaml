@@ -79,7 +79,7 @@
         <TextBlock Grid.Column="0" Grid.Row="6" Text="Valid HSN" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
         <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="6" IsChecked="{Binding IsValidHSN, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource checkBoxConverter}}" ToolTip="Valid HSN">
             <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Checked">
+                <i:EventTrigger EventName="Unchecked">
                     <i:InvokeCommandAction Command="{Binding textBoxChanged}" CommandParameter="checkChanged" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
